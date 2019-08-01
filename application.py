@@ -1,4 +1,4 @@
-from flask import Flask, session,  render_template
+from flask import Flask, session
 
 # from config import Configuration
 from flask_sqlalchemy import SQLAlchemy
@@ -27,12 +27,4 @@ def format_value_int(value):
     return f"{value:,}"
 
 
-app.jinja_env.globals.update(format_value_float=format_value_float,
-                             format_value_int=format_value_int)
-
-# app = Flask(__name__)
-
-
-@app.route('/')
-def index():
-    return render_template('login.html')
+app.jinja_env.globals.update(format_value_float=format_value_float, format_value_int=format_value_int)
