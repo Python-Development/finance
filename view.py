@@ -37,7 +37,7 @@ def login():
             return render_template('apologise.html', error=error.password_error())
         else:
             return render_template('apologise.html', error=error.user_error())
-    return render_template('xaxaxaxa.html', form=login_form, alert='primary')
+    return render_template('login.html', form=login_form, alert='primary')
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -54,7 +54,7 @@ def register():
         db.session.add(new_user)
         db.session.commit()
         flash("Success! Let's log in")
-        return render_template('xaxaxaxa.html', form=login_form)
+        return render_template('login.html', form=login_form)
     return render_template('register.html', form=register_form)
 
 
