@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+
+    <div class="container-login100">
+        <div class="wrap-login100 p-t-50 p-b-90">
+            <form class="login100-form validate-form flex-sb flex-w" action="/register" method="post">
+                    <span class="login100-form-title p-b-51">
+						Registration
+					</span>
+
+                <div class="wrap-input100 validate-input m-b-16" data-validate="Username is required">
+                    {{ form.hidden_tag() }}
+                    {{ form.username(placeholder='Username', class="input100", type="text") }}
+                    <span class="focus-input100"></span>
+                </div>
+                {% for error in form.username.errors %}
+                    <div class="err_form">
+                        <ul>
+                            <li>{{ error }}</li>
+                        </ul>
+                    </div>
+                {% endfor %}
+
+                <div class="wrap-input100 validate-input m-b-16" data-validate="Password is required">
+                    {{ form.password(placeholder='Password', class="input100", type="password") }}
+                    <span class="focus-input100"></span>
+                </div>
+                {% for error in form.password.errors %}
+                    <div class="err_form">
+                        <ul>
+                            <li>{{ error }}</li>
+                        </ul>
+                    </div>
+                {% endfor %}
+
+                <div class="wrap-input100 validate-input m-b-16" data-validate="Password is required">
+                    {{ form.confirmPassword(placeholder='Confirm Password', class="input100", type="password") }}
+                    <span class="focus-input100"></span>
+                </div>
+                {% for error in form.confirmPassword.errors %}
+                    <div class="err_form">
+                        <ul>
+                            <li>{{ error }}</li>
+                        </ul>
+                    </div>
+                {% endfor %}
+
+                <div class="container-login100-form-btn m-t-17">
+                    <button class="login100-form-btn">
+                        Register
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

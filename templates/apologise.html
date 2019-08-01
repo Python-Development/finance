@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}
+    apologise
+{% endblock %}
+
+{% block main %}
+
+
+    <div class="container py-5 bg-dark text-white" style="width: 85%; margin: 100px">
+        <div class="row">
+            <div class="col-md-2 text-center">
+                <h6 style="padding-top: 12px"><i class="fa fa-exclamation-triangle fa-5x"></i><br/>Status Code: 403</h6>
+            </div>
+            <div class="col-md-10" style="text-align: left">
+                <h3>OPPSSS!!!! Sorry...</h3>
+                <h6>{{ error }}<br/>Please go back to the previous page and try again.</h6>
+                <a class="btn btn-danger" href="javascript:history.back()">Go Back</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

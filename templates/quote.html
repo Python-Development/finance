@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}
+    quote
+{% endblock %}
+
+{% block main %}
+    <div class="login-page">
+        <div style="background-color: #343A40" class="form">
+            <form class="login-form" action="/quote" method="post">
+                <h2 style="color: #f2f2f2" id="form_info">Quote Shares</h2><br>
+                {{ form.hidden_tag() }}
+                {{ form.symbol(placeholder='Symbol') }}
+                <button>Quote</button>
+            </form>
+        </div>
+
+        <div class="container__item container__item--bottom">
+            <p>Inspired by <a href="//dribbble.com/shots/2989456-Email-input-field" target="_blank">Daniel Luca</a>.</p>
+        </div>
+    </div>
+{% endblock %}

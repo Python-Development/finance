@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}
+    buy
+{% endblock %}
+
+{% block main %}
+    <div class="login-page">
+        <div style="background-color: #343A40" class="form">
+            <form class="login-form" action="/buy" method="post">
+                <h2 style="color: #f2f2f2" id="form_info">Buy Shares</h2><br>
+                {{ form.hidden_tag() }}
+                {{ form.symbol(placeholder='Symbol') }}
+                {{ form.number(placeholder='Shares', type="number") }}
+                {% for error in form.number.errors %}
+                    <div class="err_form">
+                        <ul>
+                            <li>{{ error }}</li>
+                        </ul>
+                    </div>
+                {% endfor %}
+                <button>Buy</button>
+            </form>
+        </div>
+
+        <div class="container__item container__item--bottom">
+            <p>Inspired by <a href="//dribbble.com/shots/2989456-Email-input-field" target="_blank">Daniel Luca</a>.</p>
+        </div>
+    </div>
+{% endblock %}

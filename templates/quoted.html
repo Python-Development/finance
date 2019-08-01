@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}
+    quoted
+{% endblock %}
+
+{% block main %}
+    <table class="table-fill">
+        <thead>
+        <tr>
+            <th class="text-left"><h3>{{ companyName }} ({{ symbol }})</h3></th>
+            <th class="text-left"><h3>{{ price }} {{ currency }}</h3><h5 style="color: {{ color_high_low }}">
+                {% if symbol_high_low %}
+                    &plus;{{ format_value_float(day_change) }} (&plus;{{ format_value_float(change_pct) }}%)
+                {% else %}
+                    &minus;{{ format_value_float(day_change) }} (&minus;{{ format_value_float(change_pct) }}%)
+                {% endif %}</h5></th>
+        </tr>
+        </thead>
+        <tbody class="table-hover">
+        <tr>
+            <td>Previous Close</td>
+            <td>{{ format_value_float(close_yesterday) }}</td>
+        </tr>
+        <tr>
+            <td>Open</td>
+            <td>{{ format_value_float(price_open) }}</td>
+        </tr>
+        <tr>
+            <td>High</td>
+            <td>{{ format_value_float(day_high) }}</td>
+        </tr>
+        <tr>
+            <td>Low</td>
+            <td>{{ format_value_float(day_low) }}</td>
+        </tr>
+        <tr>
+            <td>market_cap</td>
+            <td>{{ format_value_int(market_cap) }}</td>
+        </tr>
+        <tr>
+            <td>volume</td>
+            <td>{{ format_value_int(volume) }}</td>
+        </tr>
+        <tr>
+            <td>volume_avg</td>
+            <td>{{ format_value_int(volume_avg) }}</td>
+        </tr>
+        <tr>
+            <td>shares</td>
+            <td>{{ format_value_int(shares) }}</td>
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}

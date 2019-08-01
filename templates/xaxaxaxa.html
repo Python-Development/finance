@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+
+    <div class="container-login100">
+        <div class="wrap-login100 p-t-50 p-b-90">
+            <form class="login100-form validate-form flex-sb flex-w" action="/login" method="post">
+
+                    <span class="login100-form-title p-b-51">
+						Authorization
+					</span>
+
+                <div class="wrap-input100 validate-input m-b-16" data-validate="Username is required">
+                    {{ form.hidden_tag() }}
+                    {{ form.username(placeholder='Username', class="input100", type="text") }}
+                    <span class="focus-input100"></span>
+                </div>
+                {% for error in form.username.errors %}
+                    <div class="err_form">
+                        <ul>
+                            <li>{{ error }}</li>
+                        </ul>
+                    </div>
+                {% endfor %}
+                <div class="wrap-input100 validate-input m-b-16" data-validate="Password is required">
+                    {{ form.password(placeholder='Password', class="input100", type="password") }}
+                    <span class="focus-input100"></span>
+                </div>
+                {% for error in form.password.errors %}
+                    <div class="err_form">
+                        <ul>
+                            <li>{{ error }}</li>
+                        </ul>
+                    </div>
+                {% endfor %}
+                <div class="container-login100-form-btn m-t-17">
+                    <button class="login100-form-btn">
+                        Log in
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <div id="dropDownSelect1"></div>
+
+{% endblock %}
