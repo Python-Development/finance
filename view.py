@@ -29,6 +29,7 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    db.create_all()
     login_form = form.LoginForm()
     if login_form.validate_on_submit():
         user = User.query.filter_by(username=login_form.username.data).first()
@@ -49,7 +50,6 @@ def register():
     login_form = form.LoginForm()
     register_form = form.RegisterForm()
     if register_form.validate_on_submit():
-        db.create_all()
         user = User.query.filter_by(username=register_form.username.data).first()
         if user:
             return render_template('apologise.html', error=error.name_is_used())
