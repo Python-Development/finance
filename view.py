@@ -45,7 +45,7 @@ def register():
     login_form = form.LoginForm()
     register_form = form.RegisterForm()
     if register_form.validate_on_submit():
-        # db.create_all()
+        db.create_all()
         user = User.query.filter_by(username=register_form.username.data).first()
         if user:
             return render_template('apologise.html', error=error.name_is_used())

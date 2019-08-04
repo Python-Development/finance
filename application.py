@@ -30,5 +30,4 @@ def format_value_int(value):
 app.jinja_env.globals.update(format_value_float=format_value_float, format_value_int=format_value_int)
 
 if __name__ == '__main__':
-    db.create_all()
     app.run()
