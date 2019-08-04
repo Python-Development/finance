@@ -4,6 +4,7 @@ from flask import Flask, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, current_user
 
+
 app = Flask(__name__)
 # app.config.from_object(Configuration)
 app.config['SECRET_KEY'] = 'some_secret'
@@ -28,6 +29,7 @@ def format_value_int(value):
 
 
 app.jinja_env.globals.update(format_value_float=format_value_float, format_value_int=format_value_int)
+
 
 if __name__ == '__main__':
     app.run()
