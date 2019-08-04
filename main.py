@@ -1,5 +1,5 @@
-from application import app
-import view
-
-if __name__ == '__main__':
-    app.run()
+# from application import app
+# import view
+#
+# if __name__ == '__main__':
+#     app.run()
