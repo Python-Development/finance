@@ -17,8 +17,12 @@ def load_user(user_id):
 @app.route('/')
 @login_required
 def index():
-    update()
     user = User.query.filter_by(username=session['user_name']).first()
+    for share in user.shares:
+        price = look_price(share.symbol).get('price')
+        share.price = price
+        share.total = float(price) * share.number
+        db.session.commit()
     total = sum(i.total for i in user.shares) + user.cash
     return render_template('index.html', shares=user.shares, cash=user.cash, total=total)
 
@@ -196,18 +200,9 @@ def apologise():
     return render_template('apologise.html')
 
 
-def update():
-    user = User.query.filter_by(username=session['user_name']).first()
-    for share in user.shares:
-        price = look_price(share.symbol).get('price')
-        share.price = price
-        share.total = float(price) * share.number
-        db.session.commit()
-    return None
-
-
 def lookup(symbol, ind=0):
-    key = ['xARckomzGL6rXBCD8XAuwBsYWpGymkLLzf4ezRtk5NFKt6Nz5IKhm1xnxrn6',
+    key = ['zbKmuWlMBw567VPijVFF7ZsPIRO3lw7CLJC45ktVQOataVhwtUf1aL65h0lZ',
+           'xARckomzGL6rXBCD8XAuwBsYWpGymkLLzf4ezRtk5NFKt6Nz5IKhm1xnxrn6',
            '11IL0BGRBH4kDe3wHo6cAi8esm2SkTazFYATIhHmYLCA4brujDFJ12ezxV3v',
            'Jy32UwC6XcYDcjJZZTfmT9tUYGqhV2i792ctRuPJkzQ8nNoICm4UxNUqBCaX',
            'zrYQyYc4HAvWRUZ6GVP4C5lKh6W00IVu5PfZ1Uao3Gr34R4cyGjQOfM4mKFB',
@@ -243,7 +238,8 @@ def lookup(symbol, ind=0):
 
 
 def look_price(symbol, ind=0):
-    key = ['xARckomzGL6rXBCD8XAuwBsYWpGymkLLzf4ezRtk5NFKt6Nz5IKhm1xnxrn6',
+    key = ['R4EQOXXl72So1LGEeRwiuCll2xygPLcwEvlQzcVQkTmQowesOB20EillvlWo',
+           'xARckomzGL6rXBCD8XAuwBsYWpGymkLLzf4ezRtk5NFKt6Nz5IKhm1xnxrn6',
            '11IL0BGRBH4kDe3wHo6cAi8esm2SkTazFYATIhHmYLCA4brujDFJ12ezxV3v',
            'Jy32UwC6XcYDcjJZZTfmT9tUYGqhV2i792ctRuPJkzQ8nNoICm4UxNUqBCaX',
            'zrYQyYc4HAvWRUZ6GVP4C5lKh6W00IVu5PfZ1Uao3Gr34R4cyGjQOfM4mKFB',

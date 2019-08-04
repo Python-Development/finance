@@ -205,7 +205,7 @@ tr:last-child {
 }
 
 tr:nth-child(odd) td {
-  background:#EBEBEB;
+  background:#ECEFF5;
 }
 
 tr:nth-child(odd):hover td {
