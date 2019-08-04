@@ -1,4 +1,4 @@
-from flask import Flask, session
+from flask import Flask
 
 from config import Configuration
 from flask_sqlalchemy import SQLAlchemy
@@ -12,20 +12,6 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 from view import *
 
-
-def format_value_float(value):
-    """Format value as USD."""
-    value = float(value)
-    return f"{value:,.2f}"
-
-
-def format_value_int(value):
-    """Format value as USD."""
-    value = int(value)
-    return f"{value:,}"
-
-
-app.jinja_env.globals.update(format_value_float=format_value_float, format_value_int=format_value_int)
 
 if __name__ == '__main__':
     app.run()
