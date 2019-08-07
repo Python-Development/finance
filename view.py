@@ -160,9 +160,9 @@ def sell():
     user = User.query.filter_by(username=session['user_name']).first()
     if sell_form.validate_on_submit():
         symbol = request.form.get('symbol')
-        data = look_price(symbol)
         if not symbol:
             return render_template('apologise.html', error=error.symbol_error())
+        data = look_price(symbol)
         for item in user.shares:
             if item.symbol == symbol.upper():
                 if item.number - sell_form.number.data < 0:

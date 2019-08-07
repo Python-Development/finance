@@ -30,7 +30,11 @@ def lookup(symbol, ind=0):
         requests.get(f'https://api.worldtradingdata.com/api/v1/stock?symbol={symbol}'
                      f'&api_token={key[ind]}').json()['data'][0]['symbol']
     except (KeyError, TypeError, ValueError):
-        return lookup(symbol, ind + 1)
+        if len(key) > ind + 1:
+            return lookup(symbol, ind + 1)
+        else:
+            return requests.get(f'https://api.worldtradingdata.com/api/v1/stock?symbol={symbol}'
+                                f'&api_token={key[ind]}').json()
     try:
         get = requests.get(f'https://api.worldtradingdata.com/api/v1/stock?symbol={symbol}&api_token={key[ind]}').json()
         return {
