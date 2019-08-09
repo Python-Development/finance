@@ -91,8 +91,10 @@ def quote():
                 volume=data.get('volume'),
                 volume_avg=data.get('volume_avg'),
                 shares=int(data.get('shares')),
-                color_high_low='red' if float(data.get('day_change')) < 0 else 'green',
-                symbol_high_low=False if float(data.get('day_change')) < 0 else True)
+                color_high_low='red' if float(data.get('day_change')) - float(
+                    data.get('close_yesterday')) < 0 else 'green',
+                symbol_high_low=False if float(data.get('day_change')) - float(
+                    data.get('close_yesterday')) < 0 else True)
         except (KeyError, TypeError, ValueError):
             return render_template('apologise.html', error=error.symbol_error())
 
