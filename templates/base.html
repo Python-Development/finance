@@ -60,13 +60,13 @@
             </ul>
             <ul class="navbar-nav ml-auto mt-2">
                 <li class="welcome">Welcome, {{ session.user_name }}</li>
-                <li class="nav-item"><a class="btn btn-outline-success my-2 my-sm-0" href="/logout">Log Out</a></li>
+                <li class="nav-item"><a class="btn btn-outline-info my-2 my-sm-0" href="/logout">Log Out</a></li>
             </ul>
         {% else %}
             <ul class="navbar-nav ml-auto mt-2" id="fff">
-                <li><a href="/register" role="button" class="btn btn-outline-success my-2 my-sm-0">Register</a></li>
+                <li><a href="/register" role="button" class="btn btn-outline-info my-2 my-sm-0">Register</a></li>
                 <li>-</li>
-                <li><a href="/login" role="button" class="btn btn-outline-success my-2 my-sm-0">Log In</a></li>
+                <li><a href="/login" role="button" class="btn btn-outline-info my-2 my-sm-0">Log In</a></li>
             </ul>
         {% endif %}
     </div>
