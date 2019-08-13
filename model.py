@@ -4,8 +4,8 @@ from application import UserMixin
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(10), unique=True, nullable=False)
-    password = db.Column(db.String(30), unique=True, nullable=False)
+    username = db.Column(db.String(20), unique=True, nullable=False)
+    password = db.Column(db.String(85), unique=True, nullable=False)
     cash = db.Column(db.Float)
     shares = db.relationship('Share', backref='owner')
     history = db.relationship('History', backref='owner')
@@ -17,7 +17,7 @@ class User(UserMixin, db.Model):
 class Share(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     symbol = db.Column(db.String(10), nullable=False)
-    name = db.Column(db.String(10), nullable=False)
+    name = db.Column(db.String(80), nullable=False)
     number = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Float, nullable=False)
     total = db.Column(db.Float, nullable=False)
@@ -30,7 +30,7 @@ class Share(db.Model):
 class History(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     symbol = db.Column(db.String(10), nullable=False)
-    name = db.Column(db.String(10), nullable=False)
+    name = db.Column(db.String(80), nullable=False)
     number = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Float, nullable=False)
     total = db.Column(db.Float, nullable=False)
