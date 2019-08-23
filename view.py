@@ -74,30 +74,29 @@ def quote():
     quote_form = form.QuoteForm()
     if quote_form.validate_on_submit():
         data = lookup(quote_form.symbol.data)
-        try:
-            return render_template(
-                'quoted.html',
-                companyName=data.get('companyName'),
-                currency=data.get('currency'),
-                symbol=data.get('symbol'),
-                price=data.get('price'),
-                day_change=abs(float(data.get('day_change'))),
-                change_pct=abs(float(data.get('change_pct'))),
-                close_yesterday=data.get('close_yesterday'),
-                price_open=data.get('price_open'),
-                day_high=data.get('day_high'),
-                day_low=data.get('day_low'),
-                market_cap=data.get('market_cap'),
-                volume=data.get('volume'),
-                volume_avg=data.get('volume_avg'),
-                shares=int(data.get('shares')),
-                color_high_low='red' if float(data.get('price')) - float(
-                    data.get('close_yesterday')) < 0 else 'green',
-                symbol_high_low=False if float(data.get('price')) - float(
-                    data.get('close_yesterday')) < 0 else True)
-        except (KeyError, TypeError, ValueError):
-            return render_template('apologise.html', error=error.symbol_error())
+        if "error" in data:
+            return render_template('apologise.html', error=data["error"])
 
+        return render_template(
+            'quoted.html',
+            companyName=data.get('companyName'),
+            currency=data.get('currency'),
+            symbol=data.get('symbol'),
+            price=data.get('price'),
+            day_change=abs(float(data.get('day_change'))),
+            change_pct=abs(float(data.get('change_pct'))),
+            close_yesterday=data.get('close_yesterday'),
+            price_open=data.get('price_open'),
+            day_high=data.get('day_high'),
+            day_low=data.get('day_low'),
+            market_cap=data.get('market_cap'),
+            volume=data.get('volume'),
+            volume_avg=data.get('volume_avg'),
+            shares=int(data.get('shares')),
+            color_high_low='red' if float(data.get('price')) - float(
+                data.get('close_yesterday')) < 0 else 'green',
+            symbol_high_low=False if float(data.get('price')) - float(
+                data.get('close_yesterday')) < 0 else True)
     return render_template('quote.html', form=quote_form)
 
 
@@ -107,52 +106,52 @@ def buy():
     if buy_form.validate_on_submit():
         symbol = buy_form.symbol.data
         data = lookup(symbol)
+        if "error" in data:
+            return render_template('apologise.html', error=data["error"])
+
         user = User.query.filter_by(username=session['user_name']).first()
-        try:
-            for item in user.shares:
-                if (user.cash - (float(data.get('price')) * buy_form.number.data)) < 0:
-                    return render_template('apologise.html',
-                                           error=error.not_enough_cash(buy_form.number.data, symbol.upper()))
-                if item.symbol == symbol.upper():
-                    item.number += buy_form.number.data
-                    item.total += float(data.get('price')) * buy_form.number.data
-                    user.cash -= float(data.get('price')) * buy_form.number.data
-                    new_history = History(
-                        symbol=item.symbol,
-                        name=item.name,
-                        number=buy_form.number.data,
-                        price=data.get('price'),
-                        total=float(data.get('price')) * buy_form.number.data,
-                        transacted=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'),
-                        status='bought',
-                        owner=user)
-                    db.session.add(new_history)
-                    db.session.commit()
-                    flash('Success')
-                    return redirect(url_for('index'))
-            new_shares = Share(
-                symbol=data.get('symbol'),
-                name=data.get('companyName'),
-                number=buy_form.number.data,
-                price=data.get('price'),
-                total=float(data.get('price')) * buy_form.number.data,
-                owner=user)
-            new_history = History(
-                symbol=new_shares.symbol,
-                name=new_shares.name,
-                number=new_shares.number,
-                price=new_shares.price,
-                total=new_shares.total,
-                transacted=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'),
-                status='bought',
-                owner=user)
-            user.cash -= float(data.get('price')) * buy_form.number.data
-            db.session.add(new_shares, new_history)
-            db.session.commit()
-            flash('Success')
-            return redirect(url_for('index'))
-        except (KeyError, TypeError, ValueError):
-            return render_template('apologise.html', error=error.symbol_error())
+        for item in user.shares:
+            if (user.cash - (float(data.get('price')) * buy_form.number.data)) < 0:
+                return render_template('apologise.html',
+                                       error=error.not_enough_cash(buy_form.number.data, symbol.upper()))
+            if item.symbol == symbol.upper():
+                item.number += buy_form.number.data
+                item.total += float(data.get('price')) * buy_form.number.data
+                user.cash -= float(data.get('price')) * buy_form.number.data
+                new_history = History(
+                    symbol=item.symbol,
+                    name=item.name,
+                    number=buy_form.number.data,
+                    price=data.get('price'),
+                    total=float(data.get('price')) * buy_form.number.data,
+                    transacted=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'),
+                    status='bought',
+                    owner=user)
+                db.session.add(new_history)
+                db.session.commit()
+                flash('Success')
+                return redirect(url_for('index'))
+        new_shares = Share(
+            symbol=data.get('symbol'),
+            name=data.get('companyName'),
+            number=buy_form.number.data,
+            price=data.get('price'),
+            total=float(data.get('price')) * buy_form.number.data,
+            owner=user)
+        new_history = History(
+            symbol=new_shares.symbol,
+            name=new_shares.name,
+            number=new_shares.number,
+            price=new_shares.price,
+            total=new_shares.total,
+            transacted=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'),
+            status='bought',
+            owner=user)
+        user.cash -= float(data.get('price')) * buy_form.number.data
+        db.session.add(new_shares, new_history)
+        db.session.commit()
+        flash('Success')
+        return redirect(url_for('index'))
     return render_template('buy.html', form=buy_form)
 
 
